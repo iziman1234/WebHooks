@@ -1,39 +1,30 @@
-package main
+# Microsoft ASP.NET Core WebHooks [Archived]
 
-import (
-	"fmt"
+**This GitHub project has been archived.** Ongoing development on this prototype can be found in <https://github.com/aspnet/AspLabs>.
 
-	"net/http"
+## Note: This repo is solely for the ASP.NET Core WebHooks projects (libraries to consume WebHooks on ASP.NET Core 2.0 and .NET Standard 2.0). For ASP.NET WebHooks (targeting .NET Framework 4.5), see the [aspnet/AspNetWebHooks](https://github.com/aspnet/aspnetwebhooks) repo.
 
-	"gopkg.in/go-playground/webhooks.v5/github"
-)
+ASP.NET Core WebHooks provide support for receiving WebHooks. The packages depend on [ASP.NET Core MVC](https://github.com/aspnet/AspNetCore).
 
-const (
-	path = "/webhooks"
-)
+ASP.NET Core MVC is part of ASP.NET Core. You can find samples, documentation and getting started instructions for ASP.NET Core at the [AspNetCore](https://github.com/aspnet/AspNetCore) repo.
 
-func main() {
-	hook, _ := github.New(github.Options.Secret("MyGitHubSuperSecretSecrect...?"))
+### Samples
+- [All Samples](/samples/)
+- [Azure](/samples/AzureAlertCoreReceiver)
+- [AzureContainerRegistry](/samples/AzureContainerRegistryCoreReceiver)
+- [Bitbucket](/samples/BitbucketCoreReceiver)
+- [Dropbox](/samples/DropboxCoreReceiver)
+- [DynamicCRM](/samples/DynamicsCRMCoreReceiver)
+- [GitHub](/samples/GitHubCoreReceiver)
+- [Kudu](/samples/KuduCoreReceiver)
+- [MailChimp](/samples/MailChimpCoreReceiver)
+- [Pusher](/samples/PusherCoreReceiver)
+- [SalesForce](/samples/SalesforceCoreReceiver)
+- [Slack](/samples/SlackCoreReceiver)
+- [Stripe](/samples/StripeCoreReceiver)
+- [Trello](/samples/TrelloCoreReceiver)
+- [WordPress](/samples/WordPressCoreReceiver)
 
-	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		payload, err := hook.Parse(r, github.ReleaseEvent, github.PullRequestEvent)
-		if err != nil {
-			if err == github.ErrEventNotFound {
-				// ok event wasn;t one of the ones asked to be parsed
-			}
-		}
-		switch payload.(type) {
+### Building from source
 
-		case github.ReleasePayload:
-			release := payload.(github.ReleasePayload)
-			// Do whatever you want from here...
-			fmt.Printf("%+v", release)
-
-		case github.PullRequestPayload:
-			pullRequest := payload.(github.PullRequestPayload)
-			// Do whatever you want from here...
-			fmt.Printf("%+v", pullRequest)
-		}
-	})
-	http.ListenAndServe(":3000", nil)
-}
+To run a complete build on command line only, execute `build.cmd` or `build.sh` without arguments. See [developer documentation](https://github.com/aspnet/Home/wiki) for more details.
